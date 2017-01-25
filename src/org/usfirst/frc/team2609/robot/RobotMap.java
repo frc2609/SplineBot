@@ -40,7 +40,7 @@ public class RobotMap {
     	
     	driveRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
     	driveRight1.configEncoderCodesPerRev(159); // converts "revolutions" into feet
-    	driveRight1.reverseSensor(true);
+    	driveRight1.reverseOutput(true);
     	driveLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
     	driveLeft1.configEncoderCodesPerRev(159); // converts "revolutions" into feet
     	driveLeft1.reverseSensor(true);
