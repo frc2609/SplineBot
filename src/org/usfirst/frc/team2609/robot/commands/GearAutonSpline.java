@@ -38,7 +38,7 @@ public class GearAutonSpline extends Command {
 		File rightFile = new File("/home/lvuser/Right.csv");
 		Pathfinder.writeToCSV(rightFile, modifier.getRightTrajectory());
 		File leftFile = new File("/home/lvuser/Left.csv");
-		Pathfinder.writeToCSV(rightFile, modifier.getLeftTrajectory());
+		Pathfinder.writeToCSV(leftFile, modifier.getLeftTrajectory());
 	}
 
     // Make this return true when this Command no longer needs to run execute()
