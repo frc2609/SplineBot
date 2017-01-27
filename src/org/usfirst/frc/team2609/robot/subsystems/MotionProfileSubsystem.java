@@ -176,6 +176,12 @@ public class MotionProfileSubsystem {
 						 * wait for MP to stream to Talon, really just the first few
 						 * points
 						 */
+					if(_side == DriveSide.LEFT){
+						RobotMap.MPLeftDisabled = false;
+					}
+					else if(_side == DriveSide.RIGHT){
+						RobotMap.MPRightDisabled = false;
+					}
 					/* do we have a minimum numberof points in Talon */
 					if (_status.btmBufferCnt > kMinPointsInTalon) {
 						/* start (once) the motion profile */
@@ -206,6 +212,12 @@ public class MotionProfileSubsystem {
 						 */
 						_setValue = CANTalon.SetValueMotionProfile.Hold;
 						_state = 0;
+						if(_side == DriveSide.LEFT){
+							RobotMap.MPLeftDisabled = true;
+						}
+						else if(_side == DriveSide.RIGHT){
+							RobotMap.MPRightDisabled = true;
+						}
 						_loopTimeout = -1;
 					}
 					break;

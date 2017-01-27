@@ -30,6 +30,8 @@ public class RobotMap {
 	public static double[][] leftPath;
 	public static double[][] rightPath;
 	public static boolean drivetrainMPActive;
+	public static boolean MPLeftDisabled;
+	public static boolean MPRightDisabled;
 	public static MotionProfileSubsystem _MotionPLeft;
 	public static MotionProfileSubsystem _MotionPRight;
 	

@@ -34,14 +34,16 @@ public class LaunchMotionProfile extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return (RobotMap.MPLeftDisabled && RobotMap.MPRightDisabled);
     }
 
     // Called once after isFinished returns true
     protected void end() {
-//    	RobotMap.drivetrainMPActive = false;
+    	RobotMap.MPLeftDisabled = false;
+    	RobotMap.MPRightDisabled = false;
+    	RobotMap.drivetrainMPActive = false;
     	RobotMap._MotionPLeft.reset();
-//    	RobotMap._MotionPRight.reset();
+    	RobotMap._MotionPRight.reset();
     }
 
     // Called when another command which requires one or more of the same
