@@ -24,6 +24,7 @@ public class LaunchMotionProfile extends Command {
 //    	RobotMap._MotionPRight.reset();
     	RobotMap.drivetrainMPActive = true;
     	RobotMap._MotionPLeft.startMotionProfile();
+    	RobotMap._MotionPRight.startMotionProfile();
     	
     }
 

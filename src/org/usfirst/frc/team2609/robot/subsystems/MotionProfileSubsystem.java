@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2609.robot.subsystems;
 
+import org.usfirst.frc.team2609.enums.DriveSide;
 import org.usfirst.frc.team2609.robot.RobotMap;
 import org.usfirst.frc.team2609.traj.instrumentation;
 
@@ -14,6 +15,8 @@ public class MotionProfileSubsystem {
 	 * Instead of creating a new one every time we call getMotionProfileStatus,
 	 * keep one copy.
 	 */
+	private DriveSide _side;
+	
 	private CANTalon.MotionProfileStatus _status = new CANTalon.MotionProfileStatus();
 
 	/**
@@ -80,12 +83,13 @@ public class MotionProfileSubsystem {
 	 * @param talon
 	 *            reference to Talon object to fetch motion profile status from.
 	 */
-	public MotionProfileSubsystem(CANTalon talon) {
+	public MotionProfileSubsystem(CANTalon talon, DriveSide side) {
 		_talon = talon;
 		/*
 		 * since our MP is 10ms per point, set the control frame rate and the
 		 * notifer to half that
 		 */
+		_side = side;
 		_talon.changeMotionControlFramePeriod(5);
 		_notifer.startPeriodic(0.005);
 	}
@@ -214,7 +218,15 @@ public class MotionProfileSubsystem {
 	/** Start filling the MPs to all of the involved Talons. */
 	private void startFilling() {
 		/* since this example only has one talon, just update that one */
-		startFilling(RobotMap.leftPath, RobotMap.leftPath.length);
+		if(_side == DriveSide.LEFT){
+			startFilling(RobotMap.leftPath, RobotMap.leftPath.length);
+		}
+		else if(_side == DriveSide.RIGHT){
+			startFilling(RobotMap.rightPath, RobotMap.rightPath.length);
+		}
+		else{
+			System.out.println("!!!!!!!!NO SIDE FOUND!!!!!!!!");
+		}
 	}
 
 	private void startFilling(double[][] profile, int totalCnt) {

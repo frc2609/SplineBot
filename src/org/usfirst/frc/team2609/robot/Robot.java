@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
+import org.usfirst.frc.team2609.enums.DriveSide;
 import org.usfirst.frc.team2609.robot.commands.GearAutonSpline;
 import org.usfirst.frc.team2609.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2609.robot.subsystems.MotionProfileSubsystem;
@@ -99,10 +101,10 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
         _drivetrain.resetEncoders();
-        RobotMap._MotionPLeft = new MotionProfileSubsystem(RobotMap.driveLeft1);
-//        RobotMap._MotionPRight = new MotionProfileSubsystem(RobotMap.driveRight1);
+        RobotMap._MotionPLeft = new MotionProfileSubsystem(RobotMap.driveLeft1, DriveSide.LEFT);
+        RobotMap._MotionPRight = new MotionProfileSubsystem(RobotMap.driveRight1, DriveSide.RIGHT);
     	RobotMap._MotionPLeft.reset();
-//    	RobotMap._MotionPRight.reset();
+    	RobotMap._MotionPRight.reset();
     	RobotMap.drivetrainMPActive = false;
         /* 
          * TODO: ADD Left/Right switches inside MotionProfileSubsystem
@@ -114,7 +116,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-//        RobotMap._MotionPRight.control();
+        RobotMap._MotionPRight.control();
         RobotMap._MotionPLeft.control();
         double controlScale = 0.7;
 		double deadZone = 0.1; // Joystick scale factor
@@ -123,15 +125,15 @@ public class Robot extends IterativeRobot {
         if(!RobotMap.drivetrainMPActive){
         	_drivetrain.arcadeDrive(X*controlScale, Y*controlScale, deadZone);
         	RobotMap._MotionPLeft.reset();
-//        	RobotMap._MotionPRight.reset();
+        	RobotMap._MotionPRight.reset();
         }
         else{
         	RobotMap.driveLeft1.changeControlMode(TalonControlMode.MotionProfile);
-//        	RobotMap.driveRight1.changeControlMode(TalonControlMode.MotionProfile);
-//        	CANTalon.SetValueMotionProfile rightSetOutput = RobotMap._MotionPRight.getSetValue();
+        	RobotMap.driveRight1.changeControlMode(TalonControlMode.MotionProfile);
+        	CANTalon.SetValueMotionProfile rightSetOutput = RobotMap._MotionPRight.getSetValue();
             CANTalon.SetValueMotionProfile leftSetOutput = RobotMap._MotionPLeft.getSetValue();
             RobotMap.driveLeft1.set(leftSetOutput.value);
-//            RobotMap.driveRight1.set(rightSetOutput.value);
+            RobotMap.driveRight1.set(rightSetOutput.value);
 //            RobotMap._MotionPRight.startMotionProfile();
 //            System.out.println("MP Running");
             
