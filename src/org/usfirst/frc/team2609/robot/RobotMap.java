@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2609.robot;
 
+import org.usfirst.frc.team2609.robot.subsystems.MotionProfileSubsystem;
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
@@ -25,6 +27,12 @@ public class RobotMap {
 	public static CANTalon driveRight2;
 	public static CANTalon driveLeft1;
 	public static CANTalon driveLeft2;
+	public static double[][] leftPath;
+	public static double[][] rightPath;
+	public static boolean drivetrainMPActive;
+	public static MotionProfileSubsystem _MotionPLeft;
+	public static MotionProfileSubsystem _MotionPRight;
+	
 	
     public static void init(){
 		// DONT DEFINE THE OBJECT TYPE HERE!!1111!ONE ex. Victor  driveVictorLeft1 = new Victor(0);
@@ -40,7 +48,8 @@ public class RobotMap {
     	
     	driveRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
     	driveRight1.configEncoderCodesPerRev(159); // converts "revolutions" into feet
-    	driveRight1.reverseOutput(true);
+    	driveRight1.setInverted(true);
+    	driveRight1.reverseSensor(true);
     	driveLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
     	driveLeft1.configEncoderCodesPerRev(159); // converts "revolutions" into feet
     	driveLeft1.reverseSensor(true);

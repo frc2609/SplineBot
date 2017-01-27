@@ -53,7 +53,7 @@ public class DriveTrain extends Subsystem {
     public void tankDrive(double rightOutput, double leftOutput){
     	// TODO: Make sure that the talons are in voltage mode!
     	RobotMap.driveLeft1.changeControlMode(TalonControlMode.PercentVbus);
-    	RobotMap.driveLeft1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveRight1.changeControlMode(TalonControlMode.PercentVbus);
     	RobotMap.driveLeft1.set(leftOutput);
     	RobotMap.driveRight1.set(rightOutput);
     }

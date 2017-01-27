@@ -6,9 +6,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc.team2609.robot.commands.ExampleCommand;
+import org.usfirst.frc.team2609.robot.commands.GearAutonSpline;
 import org.usfirst.frc.team2609.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team2609.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team2609.robot.subsystems.MotionProfileSubsystem;
+
+import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -21,9 +25,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 	public static DriveTrain _drivetrain = new DriveTrain();
+
 
     Command autonomousCommand;
     SendableChooser chooser;
@@ -36,7 +40,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
         chooser = new SendableChooser();
         RobotMap.init();
-        chooser.addDefault("Default Auto", new ExampleCommand());
+        chooser.addDefault("Default Auto", new GearAutonSpline());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
     }
@@ -94,6 +98,15 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        _drivetrain.resetEncoders();
+        RobotMap._MotionPLeft = new MotionProfileSubsystem(RobotMap.driveLeft1);
+//        RobotMap._MotionPRight = new MotionProfileSubsystem(RobotMap.driveRight1);
+    	RobotMap._MotionPLeft.reset();
+//    	RobotMap._MotionPRight.reset();
+    	RobotMap.drivetrainMPActive = false;
+        /* 
+         * TODO: ADD Left/Right switches inside MotionProfileSubsystem
+         */
     }
 
     /**
@@ -101,11 +114,30 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+//        RobotMap._MotionPRight.control();
+        RobotMap._MotionPLeft.control();
         double controlScale = 0.7;
 		double deadZone = 0.1; // Joystick scale factor
         double X = -OI.driveStick.getRawAxis(0);
-        double Y = -OI.driveStick.getRawAxis(1); // Joystick axis scaled 
-        _drivetrain.arcadeDrive(X*controlScale, Y*controlScale, deadZone);
+        double Y = -OI.driveStick.getRawAxis(1);
+        if(!RobotMap.drivetrainMPActive){
+        	_drivetrain.arcadeDrive(X*controlScale, Y*controlScale, deadZone);
+        	RobotMap._MotionPLeft.reset();
+//        	RobotMap._MotionPRight.reset();
+        }
+        else{
+        	RobotMap.driveLeft1.changeControlMode(TalonControlMode.MotionProfile);
+//        	RobotMap.driveRight1.changeControlMode(TalonControlMode.MotionProfile);
+//        	CANTalon.SetValueMotionProfile rightSetOutput = RobotMap._MotionPRight.getSetValue();
+            CANTalon.SetValueMotionProfile leftSetOutput = RobotMap._MotionPLeft.getSetValue();
+            RobotMap.driveLeft1.set(leftSetOutput.value);
+//            RobotMap.driveRight1.set(rightSetOutput.value);
+//            RobotMap._MotionPRight.startMotionProfile();
+//            System.out.println("MP Running");
+            
+        }
+//        System.out.println("Left: " + RobotMap.driveLeft1.getEncPosition());
+//        System.out.println("Right: " + RobotMap.driveRight1.getEncPosition());
     }
     
     /**

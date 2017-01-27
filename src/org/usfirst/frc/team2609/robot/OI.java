@@ -3,8 +3,8 @@ package org.usfirst.frc.team2609.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-import org.usfirst.frc.team2609.robot.commands.ExampleCommand;
 import org.usfirst.frc.team2609.robot.commands.GearAutonSpline;
+import org.usfirst.frc.team2609.robot.commands.LaunchMotionProfile;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -40,11 +40,14 @@ public class OI {
 	public static Joystick driveStick;
 	public static JoystickButton button1;
 	public static JoystickButton button2;
+	public static JoystickButton button3;
 	public OI(){
 		driveStick = new Joystick(0);
 		button1 = new JoystickButton(driveStick, 1);
 		button1.whenPressed(new GearAutonSpline());
 		button2 = new JoystickButton(driveStick, 2);
+		button2.whenPressed(new LaunchMotionProfile());
+		button3 = new JoystickButton(driveStick, 3);
 	}
 }
 
