@@ -120,8 +120,8 @@ public class Robot extends IterativeRobot {
         RobotMap._MotionPLeft.control();
         double controlScale = 0.7;
 		double deadZone = 0.1; // Joystick scale factor
-        double X = -OI.driveStick.getRawAxis(0);
-        double Y = -OI.driveStick.getRawAxis(1);
+        double X = OI.driveStick.getRawAxis(1);
+        double Y = OI.driveStick.getRawAxis(0);
         if(!RobotMap.drivetrainMPActive){
         	_drivetrain.arcadeDrive(X*controlScale, Y*controlScale, deadZone);
         	RobotMap._MotionPLeft.reset();
@@ -147,5 +147,12 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+    }
+    public static void eStopMP(){
+    	RobotMap.MPLeftDisabled = true;
+    	RobotMap.MPRightDisabled = true;
+    	RobotMap.drivetrainMPActive = false;
+    	RobotMap._MotionPLeft.reset();
+    	RobotMap._MotionPRight.reset();
     }
 }

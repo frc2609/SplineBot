@@ -14,6 +14,7 @@ import com.ctre.CANTalon.TalonControlMode;
  *
  */
 public class LaunchMotionProfile extends Command {
+	int endcount;
     public LaunchMotionProfile() {
         // Use requires() here to declare subsystem dependencies
     }
@@ -21,7 +22,12 @@ public class LaunchMotionProfile extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	RobotMap._MotionPLeft.reset();
-//    	RobotMap._MotionPRight.reset();
+    	RobotMap._MotionPRight.reset();
+    	if(RobotMap.MPLeftDisabled && RobotMap.MPRightDisabled && !RobotMap.drivetrainMPActive){
+        	RobotMap.MPLeftDisabled = false;
+        	RobotMap.MPRightDisabled = false;
+        	System.out.println("EStop override");
+    	}
     	RobotMap.drivetrainMPActive = true;
     	RobotMap._MotionPLeft.startMotionProfile();
     	RobotMap._MotionPRight.startMotionProfile();
@@ -34,16 +40,25 @@ public class LaunchMotionProfile extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (RobotMap.MPLeftDisabled && RobotMap.MPRightDisabled);
+    	if(RobotMap.MPLeftDisabled && RobotMap.MPRightDisabled){
+    		endcount++;
+    	}
+    	else{
+    		endcount = 0;
+    	}
+    	if(endcount==2)
+    	{
+    		return true;
+    	}
+    	else{
+    		return false;
+    	}
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	RobotMap.MPLeftDisabled = false;
-    	RobotMap.MPRightDisabled = false;
-    	RobotMap.drivetrainMPActive = false;
-    	RobotMap._MotionPLeft.reset();
-    	RobotMap._MotionPRight.reset();
+    	Robot.eStopMP();
+    	System.out.println("Launch ended");
     }
 
     // Called when another command which requires one or more of the same

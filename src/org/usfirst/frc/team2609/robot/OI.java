@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team2609.robot.commands.GearAutonSpline;
 import org.usfirst.frc.team2609.robot.commands.LaunchMotionProfile;
+import org.usfirst.frc.team2609.robot.commands.MotionProfileEStop;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -48,6 +49,7 @@ public class OI {
 		button2 = new JoystickButton(driveStick, 2);
 		button2.whenPressed(new LaunchMotionProfile());
 		button3 = new JoystickButton(driveStick, 3);
+		button3.whenPressed(new MotionProfileEStop());
 	}
 }
 
