@@ -214,9 +214,11 @@ public class MotionProfileSubsystem {
 						_state = 0;
 						if(_side == DriveSide.LEFT){
 							RobotMap.MPLeftDisabled = true;
+							System.out.println("Left side MP done");
 						}
 						else if(_side == DriveSide.RIGHT){
 							RobotMap.MPRightDisabled = true;
+							System.out.println("Right side MP done");
 						}
 						_loopTimeout = -1;
 					}
