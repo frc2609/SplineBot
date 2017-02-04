@@ -34,8 +34,8 @@ public class GearAutonSpline extends Command {
 //        Trajectory.Config configLow = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_LOW, 0.01, 10, 8.5, 50.0);
         Trajectory.Config configFast = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_FAST, 0.01, 10, 8.5, 50.0);
         Waypoint[] points = new Waypoint[] {
-                new Waypoint(-2, 114/12, Pathfinder.d2r(60)),
-                new Waypoint(0, 0, 0)
+                new Waypoint(0, 0, Pathfinder.d2r(90)),
+                new Waypoint(76.27, 114, Pathfinder.d2r(30))
         };
         fastGenTime = System.currentTimeMillis();
         Trajectory Fasttrajectory = Pathfinder.generate(points, configFast);
