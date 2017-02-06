@@ -108,9 +108,6 @@ public class Robot extends IterativeRobot {
     	RobotMap._MotionPLeft.reset();
     	RobotMap._MotionPRight.reset();
     	RobotMap.drivetrainMPActive = false;
-        /* 
-         * TODO: ADD Left/Right switches inside MotionProfileSubsystem
-         */
     	RobotMap.FRCGyro.reset();
 
     	SmartDashboard.putNumber("MPGyro", 0);
