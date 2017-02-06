@@ -5,6 +5,7 @@ import org.usfirst.frc.team2609.robot.subsystems.MotionProfileSubsystem;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
@@ -34,6 +35,8 @@ public class RobotMap {
 	public static boolean MPRightDisabled;
 	public static MotionProfileSubsystem _MotionPLeft;
 	public static MotionProfileSubsystem _MotionPRight;
+
+	public static ADXRS450_Gyro FRCGyro;
 	
 	
     public static void init(){
@@ -55,6 +58,8 @@ public class RobotMap {
     	driveLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
     	driveLeft1.configEncoderCodesPerRev(159); // converts "revolutions" into feet
     	driveLeft1.reverseSensor(true);
+    	
+    	FRCGyro = new ADXRS450_Gyro();
     	
     	
     	

@@ -23,30 +23,33 @@ public class DriveTrain extends Subsystem {
         RobotMap.driveRight1.setEncPosition(0); // Set wherever the encoder is to position 0
     }
     public void arcadeDrive(double X, double Y, double deadZone){
-    	if (Math.abs(X)<deadZone){
+
+        if ((Math.abs(X)<deadZone) && (Math.abs(Y)<deadZone)){
         	X = 0;
-        }
-        if (Math.abs(Y)<deadZone){
         	Y = 0;
         }
+        /*if (Math.abs(-driveStick.getRawAxis(1))<deadZone){
+        	Y = 0;
+        }*/
         double leftOutput;
         double rightOutput;
         if (Y > 0) {
             if (X > 0.0) {
-                leftOutput = Y - X;
-                rightOutput = Math.max(Y, X);
+                leftOutput = Math.pow(Y, 1) - Math.pow(X, 1);
+                rightOutput = Math.max(Math.pow(Y, 1), Math.pow(X, 1));
             } else {
-                leftOutput = Math.max(Y, -X);
-                rightOutput = Y + X;
+                leftOutput = Math.max(Math.pow(Y, 1), -(Math.pow(X, 1)));
+                rightOutput = Math.pow(Y, 1) + (Math.pow(X, 1));
             }
         } else{
             if (X > 0.0) {
-                leftOutput = -Math.max(-Y, X);
-                rightOutput = Y + X;
+                leftOutput = -Math.max(-(Math.pow(Y, 1)), Math.pow(X, 1));
+                rightOutput = (Math.pow(Y, 1)) + Math.pow(X, 1);
             } else {
-                leftOutput = Y - X;
-                rightOutput = -Math.max(-Y, -X);
-            }
+                leftOutput = (Math.pow(Y, 1)) - (Math.pow(X, 1));
+                rightOutput = -Math.max(-(Math.pow(Y, 1)), -(Math.pow(X, 1)));
+           }
+
         }
         this.tankDrive(rightOutput, leftOutput);
     }

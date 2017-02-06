@@ -35,13 +35,13 @@ public class GearAutonSpline extends Command {
         Trajectory.Config configFast = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_FAST, 0.01, 10, 8.5, 50.0);
         Waypoint[] points = new Waypoint[] {
                 new Waypoint(0, 0, Pathfinder.d2r(90)),
-                new Waypoint(76.27, 114, Pathfinder.d2r(30))
+                new Waypoint(76.3/12, 114/12, Pathfinder.d2r(30))
         };
         fastGenTime = System.currentTimeMillis();
         Trajectory Fasttrajectory = Pathfinder.generate(points, configFast);
         fastGenTime = System.currentTimeMillis() - fastGenTime;
         fastModTime = System.currentTimeMillis();
-        TankModifier Fastmodifier = new TankModifier(Fasttrajectory).modify(28.5/12);
+        TankModifier Fastmodifier = new TankModifier(Fasttrajectory).modify(27.75/12);
         fastModTime = System.currentTimeMillis()-fastModTime;
         Trajectory left = Fastmodifier.getLeftTrajectory();
         Trajectory right = Fastmodifier.getRightTrajectory();

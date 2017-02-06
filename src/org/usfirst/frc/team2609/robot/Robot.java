@@ -33,6 +33,7 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     SendableChooser chooser;
+    
 
     /**
      * This function is run when the robot is first started up and should be
@@ -45,6 +46,7 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", new GearAutonSpline());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
+    	RobotMap.FRCGyro.calibrate();
     }
 	
 	/**
@@ -109,6 +111,11 @@ public class Robot extends IterativeRobot {
         /* 
          * TODO: ADD Left/Right switches inside MotionProfileSubsystem
          */
+    	RobotMap.FRCGyro.reset();
+
+    	SmartDashboard.putNumber("MPGyro", 0);
+    	SmartDashboard.putNumber("MPLeft", 0);
+    	SmartDashboard.putNumber("MPRight", 0);
     }
 
     /**
@@ -118,6 +125,10 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         RobotMap._MotionPRight.control();
         RobotMap._MotionPLeft.control();
+//        System.out.println("Left: " + RobotMap.driveLeft1.getPosition());
+//        System.out.println("Right: " + RobotMap.driveRight1.getPosition());
+
+    	SmartDashboard.putNumber("Gyro", RobotMap.FRCGyro.getAngle());
         double controlScale = 0.7;
 		double deadZone = 0.1; // Joystick scale factor
         double X = OI.driveStick.getRawAxis(1);
@@ -128,6 +139,11 @@ public class Robot extends IterativeRobot {
         	RobotMap._MotionPRight.reset();
         }
         else{
+
+        	SmartDashboard.putNumber("MPGyro", RobotMap.FRCGyro.getAngle());
+        	SmartDashboard.putNumber("MPLeft", RobotMap.driveLeft1.getPosition());
+        	SmartDashboard.putNumber("MPRight", RobotMap.driveRight1.getPosition());
+        	
         	RobotMap.driveLeft1.changeControlMode(TalonControlMode.MotionProfile);
         	RobotMap.driveRight1.changeControlMode(TalonControlMode.MotionProfile);
         	CANTalon.SetValueMotionProfile rightSetOutput = RobotMap._MotionPRight.getSetValue();
