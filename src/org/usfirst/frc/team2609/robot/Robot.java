@@ -11,6 +11,7 @@ import org.usfirst.frc.team2609.enums.DriveSide;
 import org.usfirst.frc.team2609.robot.commands.GearAutonSpline;
 import org.usfirst.frc.team2609.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2609.robot.subsystems.MotionProfileSubsystem;
+import org.usfirst.frc.team2609.traj.Logger;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
@@ -29,7 +30,7 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static DriveTrain _drivetrain = new DriveTrain();
-
+	private Logger logger;
 
     Command autonomousCommand;
     SendableChooser chooser;
@@ -47,6 +48,7 @@ public class Robot extends IterativeRobot {
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
     	RobotMap.FRCGyro.calibrate();
+    	this.logger = logger.getInstance();
     }
 	
 	/**
@@ -73,7 +75,7 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
-        
+        this.logger.openFile();
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
 		case "My Auto":
@@ -94,6 +96,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        this.logger.logAll();
     }
 
     public void teleopInit() {
@@ -110,6 +113,8 @@ public class Robot extends IterativeRobot {
     	RobotMap.drivetrainMPActive = false;
     	RobotMap.FRCGyro.reset();
 
+    	this.logger.openFile();
+    	
     	SmartDashboard.putNumber("MPGyro", 0);
     	SmartDashboard.putNumber("MPLeft", 0);
     	SmartDashboard.putNumber("MPRight", 0);
@@ -124,7 +129,9 @@ public class Robot extends IterativeRobot {
         RobotMap._MotionPLeft.control();
 //        System.out.println("Left: " + RobotMap.driveLeft1.getPosition());
 //        System.out.println("Right: " + RobotMap.driveRight1.getPosition());
+        
 
+        this.logger.logAll();
     	SmartDashboard.putNumber("Gyro", RobotMap.FRCGyro.getAngle());
         double controlScale = 0.7;
 		double deadZone = 0.1; // Joystick scale factor

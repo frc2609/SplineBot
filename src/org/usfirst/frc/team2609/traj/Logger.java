@@ -36,12 +36,12 @@ public class Logger {
         this.logging= SmartDashboard.getBoolean(this.loggerBoolean);
         SmartDashboard.putString(this.SDFileName, this.fileName);
         this.fileName = SmartDashboard.getString(SDFileName);
-        File f = new File("/simlogs");
+        File f = new File("/home/lvuser/beaverlogs");
         if(!f.exists()) {
         	f.mkdir();
         }
         
-    	File[] files = new File("/simlogs").listFiles();
+    	File[] files = new File("/home/lvuser/beaverlogs").listFiles();
     	if(files != null) {
 	        for(File file : files) {
 	            if(file.isFile()) {
@@ -77,11 +77,11 @@ public class Logger {
     private String getPath() {
     	this.fileName = SmartDashboard.getString(SDFileName);
         if(this.ds.isFMSAttached()) {
-            return String.format("/simlogs/%d_%s_%d_log.txt", ++this.max, this.ds.getAlliance().name(), this.ds.getLocation());
+            return String.format("/home/lvuser/beaverlogs/%d_%s_%d_log.txt", ++this.max, this.ds.getAlliance().name(), this.ds.getLocation());
         }else if(this.fileName != null){ 
-        	return String.format("/simlogs/%d_%s.txt",++this.max,this.fileName);
+        	return String.format("/home/lvuser/beaverlogs/%d_%s.txt",++this.max,this.fileName);
         }else {
-            return String.format("/simlogs/%d_log.txt", ++this.max);
+            return String.format("/home/lvuser/beaverlogs/%d_log.txt", ++this.max);
         }
     }
    
@@ -90,8 +90,7 @@ public class Logger {
 	        try {
 	        	//int ,%d
 	        	//double ,%.3f
-	        	this.writer.write(String.format("%d", new java.util.Date().getTime()));
-	        	this.writer.write(String.format(",%.3f", Timer.getFPGATimestamp()));
+	        	this.writer.write(String.format("%.3f", Timer.getFPGATimestamp()));
 	            this.writer.write(String.format(",%.3f", RobotMap.driveLeft1.getPosition()));
 	            this.writer.write(String.format(",%.3f", RobotMap.driveRight1.getPosition()));
 	            this.writer.write(String.format(",%.3f", (double)RobotMap.FRCGyro.getAngle()));
