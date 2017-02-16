@@ -26,7 +26,7 @@ public class DriveTrain extends Subsystem {
 			synchronized (DriveTrain.this){
 				if(RobotMap.drivetrainMPActive){
 					// Run motion profiler
-			    	double leftOutput = left.calculate(-RobotMap.driveLeft1.getEncPosition());
+			    	double leftOutput = left.calculate(RobotMap.driveLeft1.getEncPosition());
 			    	double rightOutput = right.calculate(RobotMap.driveRight1.getEncPosition());
 			    	
 			    	double angleError = (Pathfinder.r2d(left.getHeading()) - RobotMap.ahrs.getYaw());
@@ -120,6 +120,7 @@ public class DriveTrain extends Subsystem {
 			RobotMap.driveLeft1.changeControlMode(TalonControlMode.PercentVbus);
 			RobotMap.driveRight1.changeControlMode(TalonControlMode.PercentVbus);
 			RobotMap.drivetrainMPActive = true;
+			System.out.println("Starting MP loops");
 		}
     }
     

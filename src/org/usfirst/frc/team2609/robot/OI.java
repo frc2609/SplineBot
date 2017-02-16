@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team2609.robot.commands.GearAutonSpline;
+import org.usfirst.frc.team2609.robot.commands.LaunchMP;
 import org.usfirst.frc.team2609.robot.commands.LaunchMotionProfile;
 import org.usfirst.frc.team2609.robot.commands.MotionProfileEStop;
 
@@ -42,6 +43,7 @@ public class OI {
 	public static JoystickButton button1;
 	public static JoystickButton button2;
 	public static JoystickButton button3;
+	public static JoystickButton button5;
 	public OI(){
 		driveStick = new Joystick(0);
 		button1 = new JoystickButton(driveStick, 1);
@@ -50,6 +52,8 @@ public class OI {
 		button2.whenPressed(new LaunchMotionProfile());
 		button3 = new JoystickButton(driveStick, 3);
 		button3.whenPressed(new MotionProfileEStop());
+		button5 = new JoystickButton(driveStick, 5);
+		button5.whenPressed(new LaunchMP());
 	}
 }
 

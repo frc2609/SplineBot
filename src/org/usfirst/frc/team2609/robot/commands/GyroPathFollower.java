@@ -44,11 +44,11 @@ public class GyroPathFollower extends Command {
 //    	leftOutput = leftOutput-turn;
 //    	rightOutput = rightOutput+turn;
     	
-    	System.out.println(leftOutput);
+//    	System.out.println(leftOutput);
 //    	System.out.println(rightOutput);
     	
-    	RobotMap.driveLeft1.set(leftOutput);
-    	RobotMap.driveRight1.set(rightOutput);
+//    	RobotMap.driveLeft1.set(leftOutput);
+//    	RobotMap.driveRight1.set(rightOutput);
     	
     }
 

@@ -68,7 +68,7 @@ public class Robot extends IterativeRobot {
      */
     public void disabledInit(){
     	enabledLooper.stop();
-    	shifter.high();
+//    	shifter.high();
     }
 	
 	public void disabledPeriodic() {
@@ -123,7 +123,7 @@ public class Robot extends IterativeRobot {
     	RobotMap._MotionPRight.reset();
     	RobotMap.drivetrainMPActive = false;
     	RobotMap.FRCGyro.reset();
-    	shifter.high();
+//    	shifter.high();
     	
     	this.logger.openFile();
     	
