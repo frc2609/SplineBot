@@ -7,6 +7,7 @@ import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
@@ -39,7 +40,8 @@ public class RobotMap {
 	public static boolean MPRightDisabled;
 	public static MotionProfileSubsystem _MotionPLeft;
 	public static MotionProfileSubsystem _MotionPRight;
-
+    public static DoubleSolenoid shifter;
+	
 	public static AHRS ahrs;
 	public static ADXRS450_Gyro FRCGyro;
 	
@@ -53,10 +55,10 @@ public class RobotMap {
         }
 		
 		// DONT DEFINE THE OBJECT TYPE HERE!!1111!ONE ex. Victor  driveVictorLeft1 = new Victor(0);
-    	driveRight1 = new CANTalon(1);
-    	driveRight2 = new CANTalon(2);
-    	driveLeft1 = new CANTalon(3);
-    	driveLeft2 = new CANTalon(4);
+    	driveRight1 = new CANTalon(3);
+    	driveRight2 = new CANTalon(4);
+    	driveLeft1 = new CANTalon(1);
+    	driveLeft2 = new CANTalon(2);
     	
     	driveRight2.changeControlMode(TalonControlMode.Follower);
     	driveLeft2.changeControlMode(TalonControlMode.Follower);
@@ -76,7 +78,7 @@ public class RobotMap {
     	
     	FRCGyro = new ADXRS450_Gyro();
     	
-    	
+        shifter = new DoubleSolenoid(0, 1, 0);
     	
     }
 }

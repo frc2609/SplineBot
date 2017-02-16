@@ -12,6 +12,7 @@ import org.usfirst.frc.team2609.loops.Looper;
 import org.usfirst.frc.team2609.robot.commands.GearAutonSpline;
 import org.usfirst.frc.team2609.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2609.robot.subsystems.MotionProfileSubsystem;
+import org.usfirst.frc.team2609.robot.subsystems.Shifter;
 import org.usfirst.frc.team2609.traj.Logger;
 
 import com.ctre.CANTalon;
@@ -29,6 +30,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
+	public static Shifter shifter;
 	public static OI oi;
 	public static DriveTrain _drivetrain = new DriveTrain();
 	private Logger logger;
@@ -66,6 +68,7 @@ public class Robot extends IterativeRobot {
      */
     public void disabledInit(){
     	enabledLooper.stop();
+    	shifter.high();
     }
 	
 	public void disabledPeriodic() {
@@ -120,7 +123,8 @@ public class Robot extends IterativeRobot {
     	RobotMap._MotionPRight.reset();
     	RobotMap.drivetrainMPActive = false;
     	RobotMap.FRCGyro.reset();
-
+    	shifter.high();
+    	
     	this.logger.openFile();
     	
     	SmartDashboard.putNumber("MPGyro", 0);
