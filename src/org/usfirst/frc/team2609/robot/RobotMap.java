@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import jaci.pathfinder.modifiers.TankModifier;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -45,6 +46,7 @@ public class RobotMap {
 	public static AHRS ahrs;
 	public static ADXRS450_Gyro FRCGyro;
 	
+	public static TankModifier gearPath;
 	
     public static void init(){
 		try {

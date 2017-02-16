@@ -32,10 +32,16 @@ public class GearAutonSpline extends Command {
     	time = System.currentTimeMillis();
 //        Trajectory.Config configHigh = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, 0.01, 10, 8.5, 50.0);
 //        Trajectory.Config configLow = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_LOW, 0.01, 10, 8.5, 50.0);
-        Trajectory.Config configFast = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_FAST, 0.01, 10, 8.5, 50.0);
+//        Trajectory.Config configFast = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_FAST, 0.01, 10, 8.5, 50.0);
+        Trajectory.Config configFast = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_FAST, 0.01, 2.5, 4.5, 120.0);
         Waypoint[] points = new Waypoint[] {
-                new Waypoint(0, 0, Pathfinder.d2r(90)),
-                new Waypoint(76.3/12, 114/12, Pathfinder.d2r(30))
+                new Waypoint(0, 0, Pathfinder.d2r(0)),
+                new Waypoint(4, 0, Pathfinder.d2r(0))
+//              new Waypoint(76.3/12, 131/12, Pathfinder.d2r(30))
+//              new Waypoint(76.3/12, 114/12, Pathfinder.d2r(30))
+
+//            x=87 y=131 LS: X=92 Y=131 MIDDLE: X=0 Y= 111
+//              new Waypoint(0, 4, Pathfinder.d2r(90))
         };
         fastGenTime = System.currentTimeMillis();
         Trajectory Fasttrajectory = Pathfinder.generate(points, configFast);
@@ -43,6 +49,7 @@ public class GearAutonSpline extends Command {
         fastModTime = System.currentTimeMillis();
         TankModifier Fastmodifier = new TankModifier(Fasttrajectory).modify(27.75/12);
         fastModTime = System.currentTimeMillis()-fastModTime;
+        RobotMap.gearPath = Fastmodifier;
         Trajectory left = Fastmodifier.getLeftTrajectory();
         Trajectory right = Fastmodifier.getRightTrajectory();
         double[][] rightpos = right.getPositions();
