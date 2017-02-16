@@ -4,9 +4,13 @@ import org.usfirst.frc.team2609.robot.subsystems.MotionProfileSubsystem;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -36,10 +40,18 @@ public class RobotMap {
 	public static MotionProfileSubsystem _MotionPLeft;
 	public static MotionProfileSubsystem _MotionPRight;
 
+	public static AHRS ahrs;
 	public static ADXRS450_Gyro FRCGyro;
 	
 	
     public static void init(){
+		try {
+            ahrs = new AHRS(SPI.Port.kMXP);
+            LiveWindow.addSensor("Drivetrain", "AHRS", ahrs);
+        } catch (RuntimeException ex ) {
+            DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+        }
+		
 		// DONT DEFINE THE OBJECT TYPE HERE!!1111!ONE ex. Victor  driveVictorLeft1 = new Victor(0);
     	driveRight1 = new CANTalon(1);
     	driveRight2 = new CANTalon(2);
@@ -52,12 +64,15 @@ public class RobotMap {
     	driveLeft2.set(3);
     	
     	driveRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    	driveRight1.configEncoderCodesPerRev(159); // converts "revolutions" into feet
-    	driveRight1.reverseOutput(true);
+    	driveRight1.configEncoderCodesPerRev(611);
     	driveRight1.reverseSensor(false);
+    	driveRight1.reverseOutput(false);
+    	driveRight1.setInverted(false);
     	driveLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    	driveLeft1.configEncoderCodesPerRev(159); // converts "revolutions" into feet
-    	driveLeft1.reverseSensor(true);
+    	driveLeft1.configEncoderCodesPerRev(611);
+    	driveLeft1.reverseSensor(false);
+    	driveLeft1.reverseOutput(false);
+    	driveLeft1.setInverted(true);
     	
     	FRCGyro = new ADXRS450_Gyro();
     	
