@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team2609.enums.DriveSide;
+import org.usfirst.frc.team2609.loops.Looper;
 import org.usfirst.frc.team2609.robot.commands.GearAutonSpline;
 import org.usfirst.frc.team2609.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2609.robot.subsystems.MotionProfileSubsystem;
@@ -31,7 +32,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static DriveTrain _drivetrain = new DriveTrain();
 	private Logger logger;
-
+	Looper enabledLooper = new Looper();
     Command autonomousCommand;
     SendableChooser chooser;
     
@@ -49,6 +50,13 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Auto mode", chooser);
     	RobotMap.FRCGyro.calibrate();
     	this.logger = logger.getInstance();
+    	
+    	try{
+    		enabledLooper.register(_drivetrain.getLooper());
+    	} catch (Throwable t){
+        	System.out.println(t.getMessage());
+        	System.out.println(t.getStackTrace());
+    	}
     }
 	
 	/**
@@ -57,7 +65,7 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
-
+    	enabledLooper.stop();
     }
 	
 	public void disabledPeriodic() {
@@ -118,6 +126,8 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("MPGyro", 0);
     	SmartDashboard.putNumber("MPLeft", 0);
     	SmartDashboard.putNumber("MPRight", 0);
+    	
+    	enabledLooper.start();
     }
 
     /**

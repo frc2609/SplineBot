@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2609.robot.subsystems;
 
+import org.usfirst.frc.team2609.loops.Loop;
 import org.usfirst.frc.team2609.robot.RobotMap;
 
 import com.ctre.CANTalon.TalonControlMode;
@@ -11,9 +12,31 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveTrain extends Subsystem {
     
+	private final Loop mLoop = new Loop() {
+		@Override
+		public void onStart(){
+			
+		}
+		@Override
+		public void onLoop(){
+			synchronized (DriveTrain.this){
+				if(RobotMap.drivetrainMPActive){
+					// Run motion profiler
+				}
+			}
+		}
+		@Override
+		public void onStop(){
+			
+		}
+	};
+	
+	public Loop getLooper(){
+		return mLoop;
+	}
+	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
