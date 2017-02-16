@@ -19,7 +19,7 @@ public class DriveTrain extends Subsystem {
 	private final Loop mLoop = new Loop() {
 		@Override
 		public void onStart(){
-			
+			System.out.println("Starting DriveTrain loop");
 		}
 		@Override
 		public void onLoop(){
@@ -49,7 +49,7 @@ public class DriveTrain extends Subsystem {
 		}
 		@Override
 		public void onStop(){
-			
+			System.out.println("Ending DriveTrain loop");
 		}
 	};
 	
@@ -107,17 +107,20 @@ public class DriveTrain extends Subsystem {
     }
     
     public void initMP(){
-    	left = new EncoderFollower(RobotMap.gearPath.getLeftTrajectory());
-    	left.configureEncoder(RobotMap.driveLeft1.getEncPosition(), 3840, 6/12);
-    	left.configurePIDVA(0.0, 0, 0, 1/(15.7937), 0.0);
-    	
-    	right = new EncoderFollower(RobotMap.gearPath.getRightTrajectory());
-    	right.configureEncoder(RobotMap.driveRight1.getEncPosition(), 3840, 6/12);
-    	right.configurePIDVA(0.0, 0, 0, 1/(15.7937), 0.0);
+		if (RobotMap.leftPath.length != 0) { // This is a terrible idea, because I'm no longer using that array, and I will probably remove it soon and wonder why this doesn't work
+																		// The point of this is to make sure that the trajectory has been generated.
+			left = new EncoderFollower(RobotMap.gearPath.getLeftTrajectory());
+			left.configureEncoder(RobotMap.driveLeft1.getEncPosition(), 3840, 6 / 12);
+			left.configurePIDVA(0.0, 0, 0, 1 / (15.7937), 0.0);
 
-    	RobotMap.driveLeft1.changeControlMode(TalonControlMode.PercentVbus);
-    	RobotMap.driveRight1.changeControlMode(TalonControlMode.PercentVbus);
-    	RobotMap.drivetrainMPActive = true;
+			right = new EncoderFollower(RobotMap.gearPath.getRightTrajectory());
+			right.configureEncoder(RobotMap.driveRight1.getEncPosition(), 3840, 6 / 12);
+			right.configurePIDVA(0.0, 0, 0, 1 / (15.7937), 0.0);
+
+			RobotMap.driveLeft1.changeControlMode(TalonControlMode.PercentVbus);
+			RobotMap.driveRight1.changeControlMode(TalonControlMode.PercentVbus);
+			RobotMap.drivetrainMPActive = true;
+		}
     }
     
 }

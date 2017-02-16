@@ -162,12 +162,12 @@ public class Robot extends IterativeRobot {
         	SmartDashboard.putNumber("MPLeft", RobotMap.driveLeft1.getPosition());
         	SmartDashboard.putNumber("MPRight", RobotMap.driveRight1.getPosition());
         	
-        	RobotMap.driveLeft1.changeControlMode(TalonControlMode.MotionProfile);
-        	RobotMap.driveRight1.changeControlMode(TalonControlMode.MotionProfile);
-        	CANTalon.SetValueMotionProfile rightSetOutput = RobotMap._MotionPRight.getSetValue();
-            CANTalon.SetValueMotionProfile leftSetOutput = RobotMap._MotionPLeft.getSetValue();
-            RobotMap.driveLeft1.set(leftSetOutput.value);
-            RobotMap.driveRight1.set(rightSetOutput.value);
+//        	RobotMap.driveLeft1.changeControlMode(TalonControlMode.MotionProfile);
+//        	RobotMap.driveRight1.changeControlMode(TalonControlMode.MotionProfile);
+//        	CANTalon.SetValueMotionProfile rightSetOutput = RobotMap._MotionPRight.getSetValue();
+//            CANTalon.SetValueMotionProfile leftSetOutput = RobotMap._MotionPLeft.getSetValue();
+//            RobotMap.driveLeft1.set(leftSetOutput.value);
+//            RobotMap.driveRight1.set(rightSetOutput.value);
 //            RobotMap._MotionPRight.startMotionProfile();
 //            System.out.println("MP Running");
             
